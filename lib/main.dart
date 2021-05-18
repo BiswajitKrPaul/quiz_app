@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
     {
       'question': 'What\'s is your Nickname ?',
       'answers': ['babu', 'gg', 'jj', 'ii']
-    }
+    },
   ];
 
   @override
