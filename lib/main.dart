@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/widget/answer.dart';
-import 'package:quiz_app/widget/question.dart';
+import 'package:quiz_app/widget/quiz.dart';
+import 'package:quiz_app/widget/result.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,7 +20,14 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  static const questions = [
+  void resetQuiz() {
+    setState(() {
+      print('Reset Required');
+      _questionIndex = 0;
+    });
+  }
+
+  static const _questions = [
     {
       'question': 'What\'s is your fav colour ?',
       'answers': ['red', 'blue', 'black', 'green']
@@ -39,25 +46,9 @@ class _MyAppState extends State<MyApp> {
           title: Text('Quiz App'),
         ),
         body: SafeArea(
-          child: _questionIndex < questions.length
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      child: Question(
-                          questions.elementAt(_questionIndex)['question']),
-                      margin: EdgeInsets.all(10.0),
-                    ),
-                    ...(questions.elementAt(_questionIndex)['answers']
-                            as List<String>)
-                        .map((answer) {
-                      return Answer(answerQuestion, answer);
-                    }).toList(),
-                  ],
-                )
-              : Center(
-                  child: Text('Done'),
-                ),
+          child: _questionIndex < _questions.length
+              ? Quiz(_questions, _questionIndex, answerQuestion)
+              : Result(resetQuiz),
         ),
       ),
     ));
